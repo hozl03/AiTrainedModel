@@ -40,21 +40,23 @@ with st.expander('Data'):
     st.write(df.shape)
 
     st.write(df.info())
+    st.write(df.describe().T)
 
-# # Function to create scrollable table within a small window
-# def create_scrollable_table(df, table_id, title):
-#     html = f'<h3>{title}</h3>'
-#     html += f'<div id="{table_id}" style="height:200px; overflow:auto;">'
-#     html += df.to_html()
-#     html += '</div>'
-#     return html
 
-# # Summary statistics for numerical features
-# numerical_features = df.select_dtypes(include=[np.number])
-# summary_stats = numerical_features.describe().T
-# html_numerical = create_scrollable_table(summary_stats, 'numerical_features', 'Summary statistics for numerical features')
+# Function to create scrollable table within a small window
+def create_scrollable_table(df, table_id, title):
+    html = f'<h3>{title}</h3>'
+    html += f'<div id="{table_id}" style="height:200px; overflow:auto;">'
+    html += df.to_html()
+    html += '</div>'
+    return html
 
-# display(HTML(html_numerical))
+# Summary statistics for numerical features
+numerical_features = df.select_dtypes(include=[np.number])
+summary_stats = numerical_features.describe().T
+html_numerical = create_scrollable_table(summary_stats, 'numerical_features', 'Summary statistics for numerical features')
+
+display(HTML(html_numerical))
 
 # # Summary statistics for categorical features
 # categorical_features = df.select_dtypes(include=[object])
