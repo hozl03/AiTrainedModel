@@ -120,7 +120,6 @@ st.write(plt.show())
 important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
 cat_cols = ["MSZoning", "Utilities", "BldgType", "KitchenQual", "SaleCondition", "LandSlope"]
 important_cols = important_num_cols + cat_cols
-# important_cols = important_num_cols
 
 
 df = df[important_cols]
@@ -196,20 +195,6 @@ y = df["SalePrice"]
 X = pd.get_dummies(X, columns=cat_cols)
 
 important_num_cols.remove("SalePrice")
-# important_num_cols.remove("YearBuilt")
-# important_num_cols.remove("YearRemodAdd")
-# important_num_cols.remove("TotalBsmtSF")
-# important_num_cols.remove("1stFlrSF")
-# important_num_cols.remove("GrLivArea")
-# important_num_cols.remove("FullBath")
-# important_num_cols.remove("TotRmsAbvGrd")
-# important_num_cols.remove("GarageCars")
-# important_cols.remove("MSZoning")
-# important_cols.remove("Utilities")
-# important_cols.remove("BldgType")
-# important_cols.remove("KitchenQual")
-# important_cols.remove("SaleCondition")
-# important_cols.remove("LandSlope")
 
 
 #Standardization of data
@@ -555,21 +540,37 @@ with st.sidebar:
 
     # Corrected data dictionary with valid variable names
     data = {
-           'OverallQual': overallQuality,  # Use overallQuality from slider
-           'YearBuilt': yearBuilt.year,  # Extract the year from date input
-           'YearRemodAdd': yearRemodAdd.year,  # Extract the year from date input
-           'TotalBsmtSF': totalBasmtSF,  # Use totalBasmtSF from slider
-           'TotRmsAbvGrd': totalRmsAbvGrd,  # Use totalRmsAbvGrd from slider
-           '1stFlrSF': floorSF,  # Use floorSF from slider
-           'GrLivArea': grLiveArea,  # Use grLiveArea from slider
-           'FullBath': fullBath,  # Use fullBath from slider
-           'GarageCars': garageCars,  # Use garageCars from slider
-           'MSZoning': msZoning_code,  # Use msZoning_code
-           'Utilities': utility_code,  # Use utility_code
-           'BldgType': buildingType_code,  # Use buildingType_code
-           'KitchenQual': kitchenQual_code,  # Use kitchenQual_code from selectbox
-           'SaleCondition': saleCondition_code,  # Use saleCondition_code from selectbox
-           'LandSlope': landSlope_code,  # Use landSlope_code
+           # 'OverallQual': overallQuality,  # Use overallQuality from slider
+           # 'YearBuilt': yearBuilt.year,  # Extract the year from date input
+           # 'YearRemodAdd': yearRemodAdd.year,  # Extract the year from date input
+           # 'TotalBsmtSF': totalBasmtSF,  # Use totalBasmtSF from slider
+           # 'TotRmsAbvGrd': totalRmsAbvGrd,  # Use totalRmsAbvGrd from slider
+           # '1stFlrSF': floorSF,  # Use floorSF from slider
+           # 'GrLivArea': grLiveArea,  # Use grLiveArea from slider
+           # 'FullBath': fullBath,  # Use fullBath from slider
+           # 'GarageCars': garageCars,  # Use garageCars from slider
+           # 'MSZoning': msZoning_code,  # Use msZoning_code
+           # 'Utilities': utility_code,  # Use utility_code
+           # 'BldgType': buildingType_code,  # Use buildingType_code
+           # 'KitchenQual': kitchenQual_code,  # Use kitchenQual_code from selectbox
+           # 'SaleCondition': saleCondition_code,  # Use saleCondition_code from selectbox
+           # 'LandSlope': landSlope_code,  # Use landSlope_code
+           'OverallQual': 5,  # Use overallQuality from slider
+           'YearBuilt': 1958,  # Extract the year from date input
+           'YearRemodAdd': 1985,  # Extract the year from date input
+           'TotalBsmtSF': 912,  # Use totalBasmtSF from slider
+           'TotRmsAbvGrd': 5,  # Use totalRmsAbvGrd from slider
+           '1stFlrSF': 912,  # Use floorSF from slider
+           'GrLivArea': 912,  # Use grLiveArea from slider
+           'FullBath': 1,  # Use fullBath from slider
+           'GarageCars': 1,  # Use garageCars from slider
+           'MSZoning': "RL",  # Use msZoning_code
+           'Utilities': "AllPub",  # Use utility_code
+           'BldgType': "1Fam",  # Use buildingType_code
+           'KitchenQual': "TA",  # Use kitchenQual_code from selectbox
+           'SaleCondition': "Normal",  # Use saleCondition_code from selectbox
+           'LandSlope': "Gtl",  # Use landSlope_code
+
     }
 
 
