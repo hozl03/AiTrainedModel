@@ -207,11 +207,11 @@ important_num_cols.remove("FullBath")
 important_num_cols.remove("TotRmsAbvGrd")
 important_num_cols.remove("GarageCars")
 # important_num_cols.remove("MSZoning")
-important_num_cols.remove("Utilities")
-important_num_cols.remove("BldgType")
-important_num_cols.remove("KitchenQual")
-important_num_cols.remove("SaleCondition")
-important_num_cols.remove("LandSlope")
+# important_num_cols.remove("Utilities")
+# important_num_cols.remove("BldgType")
+# important_num_cols.remove("KitchenQual")
+# important_num_cols.remove("SaleCondition")
+# important_num_cols.remove("LandSlope")
 
 
 #Standardization of data
