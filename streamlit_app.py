@@ -1,5 +1,4 @@
 import streamlit as st
-
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -73,57 +72,67 @@ y = df["SalePrice"]
 # One-Hot Encoding
 X = pd.get_dummies(X, columns=cat_cols)
 
-# Standardization
-scaler = StandardScaler()
-X[important_num_cols] = scaler.fit_transform(X[important_num_cols])
+# Check columns before scaling
+st.subheader('Columns Before Scaling')
+st.write("X columns:", X.columns)
+st.write("important_num_cols:", important_num_cols)
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Ensure all important columns are present
+missing_cols = [col for col in important_num_cols if col not in X.columns]
+if missing_cols:
+    st.error(f"Columns missing from X: {missing_cols}")
+else:
+    # Standardization
+    scaler = StandardScaler()
+    X[important_num_cols] = scaler.fit_transform(X[important_num_cols])
 
-def rmse_cv(model):
-    rmse = np.sqrt(-cross_val_score(model, X, y, scoring="neg_mean_squared_error", cv=5)).mean()
-    return rmse
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-def evaluation(y, predictions):
-    mae = mean_absolute_error(y, predictions)
-    mse = mean_squared_error(y, predictions)
-    rmse = np.sqrt(mean_squared_error(y, predictions))
-    r_squared = r2_score(y, predictions)
-    return mae, mse, rmse, r_squared
+    def rmse_cv(model):
+        rmse = np.sqrt(-cross_val_score(model, X, y, scoring="neg_mean_squared_error", cv=5)).mean()
+        return rmse
 
-# Model Evaluation
-models = pd.DataFrame(columns=["Model", "MAE", "MSE", "RMSE", "R2 Score", "RMSE (Cross-Validation)"])
+    def evaluation(y, predictions):
+        mae = mean_absolute_error(y, predictions)
+        mse = mean_squared_error(y, predictions)
+        rmse = np.sqrt(mean_squared_error(y, predictions))
+        r_squared = r2_score(y, predictions)
+        return mae, mse, rmse, r_squared
 
-# Linear Regression
-st.subheader('Linear Regression Results')
-lin_reg = LinearRegression()
-lin_reg.fit(X_train, y_train)
-predictions = lin_reg.predict(X_test)
+    # Model Evaluation
+    models = pd.DataFrame(columns=["Model", "MAE", "MSE", "RMSE", "R2 Score", "RMSE (Cross-Validation)"])
 
-mae, mse, rmse, r_squared = evaluation(y_test, predictions)
-rmse_cross_val = rmse_cv(lin_reg)
+    # Linear Regression
+    st.subheader('Linear Regression Results')
+    lin_reg = LinearRegression()
+    lin_reg.fit(X_train, y_train)
+    predictions = lin_reg.predict(X_test)
 
-new_row = pd.DataFrame({
-    "Model": ["LinearRegression"],
-    "MAE": [mae],
-    "MSE": [mse],
-    "RMSE": [rmse],
-    "R2 Score": [r_squared],
-    "RMSE (Cross-Validation)": [rmse_cross_val]
-})
+    mae, mse, rmse, r_squared = evaluation(y_test, predictions)
+    rmse_cross_val = rmse_cv(lin_reg)
 
-models = pd.concat([models, new_row], ignore_index=True)
-st.write(models)
+    new_row = pd.DataFrame({
+        "Model": ["LinearRegression"],
+        "MAE": [mae],
+        "MSE": [mse],
+        "RMSE": [rmse],
+        "R2 Score": [r_squared],
+        "RMSE (Cross-Validation)": [rmse_cross_val]
+    })
 
-# Plot Actual vs Predicted
-st.subheader('Actual vs Predicted House Prices')
-plt.figure(figsize=(10, 6))
-plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=0.6)
-plt.scatter(range(len(predictions)), predictions, label='Predicted', color='r', alpha=0.6)
-plt.title('Actual vs Predicted House Prices')
-plt.xlabel('Sample Index')
-plt.ylabel('SalePrice')
-plt.legend()
-st.pyplot(plt)
+    models = pd.concat([models, new_row], ignore_index=True)
+    st.write(models)
+
+    # Plot Actual vs Predicted
+    st.subheader('Actual vs Predicted House Prices')
+    plt.figure(figsize=(10, 6))
+    plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=0.6)
+    plt.scatter(range(len(predictions)), predictions, label='Predicted', color='r', alpha=0.6)
+    plt.title('Actual vs Predicted House Prices')
+    plt.xlabel('Sample Index')
+    plt.ylabel('SalePrice')
+    plt.legend()
+    st.pyplot(plt)
 
 # from sklearn.model_selection import GridSearchCV
 # from scipy import stats
