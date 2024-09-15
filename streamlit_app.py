@@ -165,71 +165,76 @@ plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=
 # Scatter plot for Predicted Values
 plt.scatter(range(len(predictions)), predictions, label='Predicted', color='r', alpha=0.6)
 
-# from sklearn.model_selection import GridSearchCV
-# from scipy import stats
-# from sklearn import metrics
+from sklearn.model_selection import GridSearchCV
+from scipy import stats
+from sklearn import metrics
 
-# # SVR with Grid Search
-# param_grid = {
-#     'C': [0.1, 1, 10, 100, 1000, 100000],
-#     'epsilon': [0.001, 0.01, 0.1, 1],
-#     'kernel': ['linear', 'poly', 'rbf']
-# }
+# SVR with Grid Search
+param_grid = {
+    'C': [0.1, 1, 10, 100, 1000, 100000],
+    'epsilon': [0.001, 0.01, 0.1, 1],
+    'kernel': ['linear', 'poly', 'rbf']
+}
 
-# svr = SVR()
-# grid_search = GridSearchCV(svr, param_grid, cv=5, scoring='r2', n_jobs=1)
-# grid_search.fit(X_train, y_train)
-
-
-# # Best SVR model and parameters
-# best_svr = grid_search.best_estimator_
-# best_params = grid_search.best_params_
-# svr_predictions = best_svr.predict(X_test)
-
-# # Evaluate the SVR model
-# mae_svr, mse_svr, rmse_svr, r2_svr = evaluation(y_test, svr_predictions)
-# rmse_cross_val_svr = rmse_cv(best_svr)
-
-# print("SVR (GridSearch) - Best Parameters:", best_params)
-# print("MAE:", mae_svr)
-# print("MSE:", mse_svr)
-# print("RMSE:", rmse_svr)
-# print("R2 Score:", r2_svr)
-# print("RMSE Cross-Validation:", rmse_cross_val_svr)
-# print("-" * 30)
-
-# # Create a new row for SVR and update the models DataFrame
-# new_row_svr = pd.DataFrame({
-#     "Model": ["SVR (GridSearch)"],
-#     "MAE": [mae_svr],
-#     "MSE": [mse_svr],
-#     "RMSE": [rmse_svr],
-#     "R2 Score": [r2_svr],
-#     "RMSE (Cross-Validation)": [rmse_cross_val_svr]
-# })
-# models = pd.concat([models, new_row_svr], ignore_index=True)
+svr = SVR()
+grid_search = GridSearchCV(svr, param_grid, cv=5, scoring='r2', n_jobs=1)
+grid_search.fit(X_train, y_train)
 
 
-# # Display the updated models DataFrame
-# print(models)
+# Best SVR model and parameters
+best_svr = grid_search.best_estimator_
+best_params = grid_search.best_params_
+svr_predictions = best_svr.predict(X_test)
 
-# # Plot the Actual vs Predicted values
-# plt.figure(figsize=(10, 6))
+# Evaluate the SVR model
+mae_svr, mse_svr, rmse_svr, r2_svr = evaluation(y_test, svr_predictions)
+rmse_cross_val_svr = rmse_cv(best_svr)
 
-# # Scatter plot for Actual Values
-# plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=0.6)
+st.write("MAE:", mae_svr)
+st.write("MSE:", mse_svr)
+st.write("RMSE:", rmse_svr)
+st.write("R2 Score:", r2_svr)
 
-# # Scatter plot for Predicted Values
-# plt.scatter(range(len(svr_predictions)), svr_predictions, label='Predicted', color='r', alpha=0.6)
+print("SVR (GridSearch) - Best Parameters:", best_params)
+print("MAE:", mae_svr)
+print("MSE:", mse_svr)
+print("RMSE:", rmse_svr)
+print("R2 Score:", r2_svr)
+print("RMSE Cross-Validation:", rmse_cross_val_svr)
+print("-" * 30)
 
-# # Adding Labels and Title
-# plt.title('Actual vs Predicted House Prices')
-# plt.xlabel('Sample Index')
-# plt.ylabel('SalePrice')
-# plt.legend()
+# Create a new row for SVR and update the models DataFrame
+new_row_svr = pd.DataFrame({
+    "Model": ["SVR (GridSearch)"],
+    "MAE": [mae_svr],
+    "MSE": [mse_svr],
+    "RMSE": [rmse_svr],
+    "R2 Score": [r2_svr],
+    "RMSE (Cross-Validation)": [rmse_cross_val_svr]
+})
+models = pd.concat([models, new_row_svr], ignore_index=True)
 
-# # Show the plot
-# plt.show()
+
+# Display the updated models DataFrame
+st.write(models)
+
+# Plot the Actual vs Predicted values
+plt.figure(figsize=(10, 6))
+
+# Scatter plot for Actual Values
+plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=0.6)
+
+# Scatter plot for Predicted Values
+plt.scatter(range(len(svr_predictions)), svr_predictions, label='Predicted', color='r', alpha=0.6)
+
+# Adding Labels and Title
+plt.title('Actual vs Predicted House Prices')
+plt.xlabel('Sample Index')
+plt.ylabel('SalePrice')
+plt.legend()
+
+# Show the plot
+plt.show()
 
 # # Random Forest Regressor
 # max_r2 = 0
