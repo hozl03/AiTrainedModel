@@ -10,20 +10,14 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
-import sklearn # import the module so you can use it
 from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import Ridge
-from sklearn.linear_model import Lasso
-from sklearn.linear_model import ElasticNet
 from sklearn.ensemble import RandomForestRegressor
-
 from sklearn.svm import SVR
 from xgboost import XGBRegressor
-from sklearn.preprocessing import PolynomialFeatures
 
+warnings.filterwarnings('ignore')
 
-import joblib
-
+# Load and display the data
 with st.expander('Data'):
     st.write('**Raw data**')
     df = pd.read_csv('train.csv')
@@ -42,70 +36,52 @@ with st.expander('Data'):
     st.write(df.info())
     st.write(df.describe().T)
 
-
-
-
-#House Price Distribution
-
+# House Price Distribution
+st.subheader('House Price Distribution')
 plt.figure(figsize=(9, 8))
-sns.distplot(df['SalePrice'], color='g', bins=100, hist_kws={'alpha': 0.4});
+sns.histplot(df['SalePrice'], color='g', bins=100, kde=True)
+st.pyplot(plt)
 
-# Step 1: Identify non-numeric columns (optional, for understanding)
-st.write(df.dtypes)
-
-# Step 2: Select only numeric columns
+# Correlation Heatmap
+st.subheader('Correlation Heatmap')
 numeric_df = df.select_dtypes(include=[float, int])
-
-# Step 3: Plot the heatmap with the correlation matrix of numeric data
-plt.figure(figsize=(60, 40))
-sns.heatmap(numeric_df.corr(), cmap="RdBu", annot=True, fmt=".2f")  # 'annot' adds correlation coefficients
+plt.figure(figsize=(12, 10))
+sns.heatmap(numeric_df.corr(), cmap="RdBu", annot=True, fmt=".2f")
 plt.title("Correlations Between Variables", size=15)
-st.write(plt.show())
+st.pyplot(plt)
 
-#select more important columns
+# Filter important columns
 important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
-cat_cols = ["MSZoning", "Utilities","BldgType","KitchenQual","SaleCondition","LandSlope"]
+cat_cols = ["MSZoning", "Utilities", "BldgType", "KitchenQual", "SaleCondition", "LandSlope"]
 important_cols = important_num_cols + cat_cols
 
 df = df[important_cols]
-st.write(df.info())
-
-
 df = df.drop(['GarageArea'], axis=1)
+
 st.write(df.info())
+st.write(df.head())
 
-important_num_cols.remove("GarageArea")
-
-st.write(df)
-#check any missing value
-print("Missing Values by Column")
-print("-"*30)
-print(df.isna().sum())
-print("-"*30)
-print("TOTAL MISSING VALUES:",df.isna().sum().sum())
-
+# Check for missing values
+st.subheader('Missing Values')
+st.write("Missing Values by Column")
+st.write(df.isna().sum())
+st.write("TOTAL MISSING VALUES:", df.isna().sum().sum())
 
 X = df.drop("SalePrice", axis=1)
 y = df["SalePrice"]
 
-#One-Hot encoding
+# One-Hot Encoding
 X = pd.get_dummies(X, columns=cat_cols)
 
-important_num_cols.remove("SalePrice")
-#Standardization of data
+# Standardization
 scaler = StandardScaler()
 X[important_num_cols] = scaler.fit_transform(X[important_num_cols])
-
-X.head()
-st.write(X.head())
-st.write(y)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 def rmse_cv(model):
     rmse = np.sqrt(-cross_val_score(model, X, y, scoring="neg_mean_squared_error", cv=5)).mean()
     return rmse
-
 
 def evaluation(y, predictions):
     mae = mean_absolute_error(y, predictions)
@@ -114,27 +90,18 @@ def evaluation(y, predictions):
     r_squared = r2_score(y, predictions)
     return mae, mse, rmse, r_squared
 
-models = pd.DataFrame(columns=["Model","MAE","MSE","RMSE","R2 Score","RMSE (Cross-Validation)"])
+# Model Evaluation
+models = pd.DataFrame(columns=["Model", "MAE", "MSE", "RMSE", "R2 Score", "RMSE (Cross-Validation)"])
 
-
-# Fitting the model and making predictions
+# Linear Regression
+st.subheader('Linear Regression Results')
 lin_reg = LinearRegression()
 lin_reg.fit(X_train, y_train)
 predictions = lin_reg.predict(X_test)
 
-# Evaluating the model
 mae, mse, rmse, r_squared = evaluation(y_test, predictions)
-print("MAE:", mae)
-print("MSE:", mse)
-print("RMSE:", rmse)
-print("R2 Score:", r_squared)
-print("-" * 30)
-
-# Performing cross-validation
 rmse_cross_val = rmse_cv(lin_reg)
-print("RMSE Cross-Validation:", rmse_cross_val)
 
-# Creating a new row as a DataFrame
 new_row = pd.DataFrame({
     "Model": ["LinearRegression"],
     "MAE": [mae],
@@ -144,29 +111,19 @@ new_row = pd.DataFrame({
     "RMSE (Cross-Validation)": [rmse_cross_val]
 })
 
-# Concatenating the new row with the existing DataFrame
 models = pd.concat([models, new_row], ignore_index=True)
+st.write(models)
 
-# Display the updated models DataFrame
-print(models)
-
-# Assuming y_test contains the actual values and predictions contains the predicted values
+# Plot Actual vs Predicted
+st.subheader('Actual vs Predicted House Prices')
 plt.figure(figsize=(10, 6))
-
-# Scatter plot for Actual Values
 plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=0.6)
-
-# Scatter plot for Predicted Values
 plt.scatter(range(len(predictions)), predictions, label='Predicted', color='r', alpha=0.6)
-
-# Adding Labels and Title
 plt.title('Actual vs Predicted House Prices')
 plt.xlabel('Sample Index')
 plt.ylabel('SalePrice')
 plt.legend()
-
-# Show the plot
-plt.show()
+st.pyplot(plt)
 
 # from sklearn.model_selection import GridSearchCV
 # from scipy import stats
