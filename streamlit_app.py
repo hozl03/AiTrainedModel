@@ -37,9 +37,6 @@ df.head()
     
 df.shape
     
-    st.write(df.info())
-    
-    st.write(df.describe().T)
 
 # # Function to create scrollable table within a small window
 # def create_scrollable_table(df, table_id, title):
