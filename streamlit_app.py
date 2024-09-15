@@ -76,6 +76,7 @@ st.write(df.info())
 
 important_num_cols.remove("GarageArea")
 
+st.write(df)
 #check any missing value
 print("Missing Values by Column")
 print("-"*30)
