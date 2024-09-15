@@ -145,31 +145,31 @@ print("TOTAL MISSING VALUES:",df.isna().sum().sum())
 
 sns.pairplot(df.select_dtypes(include=[np.number]))
 
-plt.scatter(x="OverallQual", y="SalePrice", data=df)
+# plt.scatter(x="OverallQual", y="SalePrice", data=df)
 
-plt.scatter(x="YearBuilt", y="SalePrice", data=df)
+# plt.scatter(x="YearBuilt", y="SalePrice", data=df)
 
 df.drop(df[(df['YearBuilt'] < 1900) & (df['SalePrice'] > 400000)].index, inplace=True)
 
-plt.scatter(x="YearBuilt", y="SalePrice", data=df)
+# plt.scatter(x="YearBuilt", y="SalePrice", data=df)
 
-plt.scatter(x="YearRemodAdd", y="SalePrice", data=df)
+# plt.scatter(x="YearRemodAdd", y="SalePrice", data=df)
 
 df.drop(df[(df['YearRemodAdd'] < 1970) & (df['SalePrice'] > 300000)].index, inplace=True)
 
-plt.scatter(x="TotalBsmtSF", y="SalePrice", data=df)
+# plt.scatter(x="TotalBsmtSF", y="SalePrice", data=df)
 
 df.drop(df[(df['TotalBsmtSF'] > 4000)].index, inplace=True)
 
-plt.scatter(x="1stFlrSF", y="SalePrice", data=df)
+# plt.scatter(x="1stFlrSF", y="SalePrice", data=df)
 
-plt.scatter(x="GrLivArea", y="SalePrice", data=df)
+# plt.scatter(x="GrLivArea", y="SalePrice", data=df)
 
 df.drop(df[(df['GrLivArea'] > 4400)].index, inplace=True)
 
-plt.scatter(x="FullBath", y="SalePrice", data=df)
+# plt.scatter(x="FullBath", y="SalePrice", data=df)
 
-plt.scatter(x="TotRmsAbvGrd", y="SalePrice", data=df)
+# plt.scatter(x="TotRmsAbvGrd", y="SalePrice", data=df)
 
 df.drop(df[(df['TotRmsAbvGrd'] == 14)].index, inplace=True)
 
