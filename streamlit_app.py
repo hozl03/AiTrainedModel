@@ -32,11 +32,14 @@ with st.expander('Data'):
     st.write('**Statistical Summary of Dataset**')
     summary = df.describe().T
     st.write(summary)
-  
+
+    st.write('**df.head**')
     st.write(df.head())
     
-df.shape
-    
+    st.write('**df.shape**')
+    df.shape
+
+    df.info()
 
 # # Function to create scrollable table within a small window
 # def create_scrollable_table(df, table_id, title):
