@@ -362,21 +362,8 @@ models.sort_values(by="RMSE (Cross-Validation)")
 st.write(models)
 
 
-# plt.figure(figsize=(12,8))
-# sns.barplot(x=models["Model"], y=models["RMSE (Cross-Validation)"])
-# plt.title("Models' RMSE Scores (Cross-Validated)", size=15)
-# plt.xticks(rotation=30, size=12)
-# plt.show()
 
-# plt.figure(figsize=(10,6))
-# sns.barplot(x=models["Model"], y=models["R2 Score"])
-# plt.title("Models' R2 Scores", size=15)
-# plt.xticks(rotation=30, size=12)
-# plt.show()
-
-# pip install --upgrade scikit-learn
-
-# joblib.dump(random_forest, 'random_forest_model.joblib')
-# joblib.dump(best_svr, 'svr_model.joblib')
-# joblib.dump(lin_reg, 'linear_regression_model.joblib')
+joblib.dump(random_forest, 'random_forest_model.joblib')
+joblib.dump(best_svr, 'svr_model.joblib')
+joblib.dump(lin_reg, 'linear_regression_model.joblib')
 
