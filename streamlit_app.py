@@ -43,46 +43,24 @@ with st.expander('Data'):
     st.write(df.describe().T)
 
 
-# Function to create scrollable table within a small window
-def create_scrollable_table(df, table_id, title):
-    html = f'<h3>{title}</h3>'
-    html += f'<div id="{table_id}" style="height:200px; overflow:auto;">'
-    html += df.to_html()
-    html += '</div>'
-    return html
 
-# Summary statistics for numerical features
-numerical_features = df.select_dtypes(include=[np.number])
-summary_stats = numerical_features.describe().T
-html_numerical = create_scrollable_table(summary_stats, 'numerical_features', 'Summary statistics for numerical features')
 
-display(HTML(html_numerical))
+#House Price Distribution
 
-# # Summary statistics for categorical features
-# categorical_features = df.select_dtypes(include=[object])
-# cat_summary_stats = categorical_features.describe().T
-# html_categorical = create_scrollable_table(cat_summary_stats, 'categorical_features', 'Summary statistics for categorical features')
+plt.figure(figsize=(9, 8))
+sns.distplot(df['SalePrice'], color='g', bins=100, hist_kws={'alpha': 0.4});
 
-# display(HTML(html_categorical ))
+# Step 1: Identify non-numeric columns (optional, for understanding)
+st.write(df.dtypes)
 
-# #House Price Distribution
-# import matplotlib.pyplot as plt
-# import seaborn as sns
+# Step 2: Select only numeric columns
+numeric_df = df.select_dtypes(include=[float, int])
 
-# plt.figure(figsize=(9, 8))
-# sns.distplot(df['SalePrice'], color='g', bins=100, hist_kws={'alpha': 0.4});
-
-# # Step 1: Identify non-numeric columns (optional, for understanding)
-# print(df.dtypes)
-
-# # Step 2: Select only numeric columns
-# numeric_df = df.select_dtypes(include=[float, int])
-
-# # Step 3: Plot the heatmap with the correlation matrix of numeric data
-# plt.figure(figsize=(60, 40))
-# sns.heatmap(numeric_df.corr(), cmap="RdBu", annot=True, fmt=".2f")  # 'annot' adds correlation coefficients
-# plt.title("Correlations Between Variables", size=15)
-# plt.show()
+# Step 3: Plot the heatmap with the correlation matrix of numeric data
+plt.figure(figsize=(60, 40))
+sns.heatmap(numeric_df.corr(), cmap="RdBu", annot=True, fmt=".2f")  # 'annot' adds correlation coefficients
+plt.title("Correlations Between Variables", size=15)
+st.write(plt.show())
 
 # #select more important columns
 # important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
