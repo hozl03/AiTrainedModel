@@ -584,17 +584,17 @@ input_data = pd.concat([input_df, df], axis=0)
 
 # important_num_cols.remove("GarageArea")
 # Handle categorical variables before numeric scaling
-X = pd.get_dummies(input_data, columns=cat_cols)
+input = pd.get_dummies(input_data, columns=cat_cols)
 
 
 
-st.write(X)
+st.write(input)
 
 # important_num_cols.remove("SalePrice")
 
 # Handle the case where the important numeric columns are scaled after dummy encoding
 # Check if important_num_cols exist in X
-missing_cols = [col for col in important_num_cols if col not in X.columns]
+missing_cols = [col for col in important_num_cols if col not in input.columns]
 
 if missing_cols:
     st.write(f"Warning: The following important numeric columns are missing from the dataset after processing: {missing_cols}")
@@ -602,15 +602,15 @@ if missing_cols:
 # Standardization of data
 scaler = StandardScaler()
 # Apply scaler only on numeric columns
-X[important_num_cols] = scaler.fit_transform(X[important_num_cols])
-X = X.drop('SalePrice', axis=1)
+input[important_num_cols] = scaler.fit_transform(input[important_num_cols])
+input = input.drop('SalePrice', axis=1)
 
 # Convert binary columns from 1/0 to True/False
-for column in X.columns:
-    if X[column].dtype == 'uint8':  # This is the data type for binary columns created by pd.get_dummies
-        X = X[column].astype(bool)
+for column in input.columns:
+    if input[column].dtype == 'uint8':  # This is the data type for binary columns created by pd.get_dummies
+        input = input[column].astype(bool)
 
-st.write(X[:1])
+st.write(input[:1])
 
 
 # Model selection and prediction
@@ -620,7 +620,7 @@ st.write(X[:1])
 st.write("## Prediction Results")
 if st.button('Predict'):
     # Linear Regression prediction
-    lin_reg_pred = lin_reg.predict(X)
+    lin_reg_pred = lin_reg.predict(input)
     
     st.write(f"**Linear Regression Prediction: ${lin_reg_pred[0]:,.2f}**")
 
