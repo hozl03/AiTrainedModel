@@ -62,29 +62,26 @@ sns.heatmap(numeric_df.corr(), cmap="RdBu", annot=True, fmt=".2f")  # 'annot' ad
 plt.title("Correlations Between Variables", size=15)
 st.write(plt.show())
 
-# #select more important columns
-# important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
-# cat_cols = ["MSZoning", "Utilities","BldgType","KitchenQual","SaleCondition","LandSlope"]
-# important_cols = important_num_cols + cat_cols
+#select more important columns
+important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
+cat_cols = ["MSZoning", "Utilities","BldgType","KitchenQual","SaleCondition","LandSlope"]
+important_cols = important_num_cols + cat_cols
 
-# df = df[important_cols]
-# df.info()
+df = df[important_cols]
+st.write(df.info())
 
-# correlation_matrix = df.corr(numeric_only=True)
-# plt.figure(figsize=(20,12))
-# sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
 
-# df = df.drop(['GarageArea'], axis=1)
-# df.info()
+df = df.drop(['GarageArea'], axis=1)
+st.write(df.info())
 
-# important_num_cols.remove("GarageArea")
+important_num_cols.remove("GarageArea")
 
-# #check any missing value
-# print("Missing Values by Column")
-# print("-"*30)
-# print(df.isna().sum())
-# print("-"*30)
-# print("TOTAL MISSING VALUES:",df.isna().sum().sum())
+#check any missing value
+print("Missing Values by Column")
+print("-"*30)
+print(df.isna().sum())
+print("-"*30)
+print("TOTAL MISSING VALUES:",df.isna().sum().sum())
 
 # sns.pairplot(df.select_dtypes(include=[np.number]))
 
