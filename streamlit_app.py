@@ -33,9 +33,9 @@ with st.expander('Data'):
     summary = df.describe().T
     st.write(summary)
   
-    st.write(df.head())
+df.head()
     
-    st.write(df.shape)
+df.shape
     
     st.write(df.info())
     
