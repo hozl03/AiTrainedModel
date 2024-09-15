@@ -118,8 +118,9 @@ st.write(plt.show())
 
 #select more important columns
 important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
-cat_cols = ["MSZoning", "Utilities", "BldgType", "KitchenQual", "SaleCondition", "LandSlope"]
-important_cols = important_num_cols + cat_cols
+# cat_cols = ["MSZoning", "Utilities", "BldgType", "KitchenQual", "SaleCondition", "LandSlope"]
+important_cols = important_num_cols
+# important_cols = important_num_cols + cat_cols
 
 
 df = df[important_cols]
@@ -192,7 +193,7 @@ X = df.drop("SalePrice", axis=1)
 y = df["SalePrice"]
 
 # #One-Hot encoding
-X = pd.get_dummies(X, columns=cat_cols)
+# X = pd.get_dummies(X, columns=cat_cols)
 
 important_num_cols.remove("SalePrice")
 
@@ -479,25 +480,25 @@ with st.sidebar:
 
     st.header('Input features')
            
-    msZoning = st.selectbox('Zoning', list(msZoning_mapping.keys()))
-    msZoning_code = msZoning_mapping[msZoning]  # Map to the corresponding code (e.g., "A", "C")
-    st.write("Zoning code selected is: ", msZoning_code)
+    # msZoning = st.selectbox('Zoning', list(msZoning_mapping.keys()))
+    # msZoning_code = msZoning_mapping[msZoning]  # Map to the corresponding code (e.g., "A", "C")
+    # st.write("Zoning code selected is: ", msZoning_code)
 
     
-    # Utility input with mapping
-    utility = st.selectbox('Utility', list(utility_mapping.keys()))
-    utility_code = utility_mapping[utility]
-    st.write("Utility code selected is: ", utility_code)
+    # # Utility input with mapping
+    # utility = st.selectbox('Utility', list(utility_mapping.keys()))
+    # utility_code = utility_mapping[utility]
+    # st.write("Utility code selected is: ", utility_code)
 
-    # Land Slope input with mapping
-    landSlope = st.selectbox('Land Slope', list(landSlope_mapping.keys()))
-    landSlope_code = landSlope_mapping[landSlope]
-    st.write("Land Slope code selected is: ", landSlope_code)
+    # # Land Slope input with mapping
+    # landSlope = st.selectbox('Land Slope', list(landSlope_mapping.keys()))
+    # landSlope_code = landSlope_mapping[landSlope]
+    # st.write("Land Slope code selected is: ", landSlope_code)
 
-    # Building Type input with mapping
-    buildingType = st.selectbox('Building Type', list(buildingType_mapping.keys()))
-    buildingType_code = buildingType_mapping[buildingType]
-    st.write("Building Type code selected is: ", buildingType_code)
+    # # Building Type input with mapping
+    # buildingType = st.selectbox('Building Type', list(buildingType_mapping.keys()))
+    # buildingType_code = buildingType_mapping[buildingType]
+    # st.write("Building Type code selected is: ", buildingType_code)
            
     overallQuality = st.slider("Rates the overall material and finish of the house", 1, 10, 5)
     st.write("The overall material and finish of the house is : ", rating[overallQuality - 1])
@@ -526,17 +527,17 @@ with st.sidebar:
     st.write("Full bathrooms above grade is : ", fullBath)
 
     # Map kitchen quality input to corresponding code
-    kitchenQual = st.selectbox('Kitchen Quality', list(kitchenQual_mapping.keys()))
-    kitchenQual_code = kitchenQual_mapping[kitchenQual]  # Map to the corresponding code (e.g., "Ex", "Gd")
-    st.write("Kitchen Quality code selected is: ", kitchenQual_code)
+    # kitchenQual = st.selectbox('Kitchen Quality', list(kitchenQual_mapping.keys()))
+    # kitchenQual_code = kitchenQual_mapping[kitchenQual]  # Map to the corresponding code (e.g., "Ex", "Gd")
+    # st.write("Kitchen Quality code selected is: ", kitchenQual_code)
 
     garageCars = st.slider("Size of garage in car capacity", 0, 10, 3)
     st.write("Size of garage in car capacity is : ", grLiveArea)
 
-    # Sale Condition input with mapping
-    saleCondition = st.selectbox('Condition of Sale', list(saleCondition_mapping.keys()))
-    saleCondition_code = saleCondition_mapping[saleCondition]
-    st.write("Sale Condition code selected is: ", saleCondition_code)
+    # # Sale Condition input with mapping
+    # saleCondition = st.selectbox('Condition of Sale', list(saleCondition_mapping.keys()))
+    # saleCondition_code = saleCondition_mapping[saleCondition]
+    # st.write("Sale Condition code selected is: ", saleCondition_code)
 
     # Corrected data dictionary with valid variable names
     data = {
@@ -564,12 +565,12 @@ with st.sidebar:
            'GrLivArea': 912,  # Use grLiveArea from slider
            'FullBath': 1,  # Use fullBath from slider
            'GarageCars': 1,  # Use garageCars from slider
-           'MSZoning': "RL",  # Use msZoning_code
-           'Utilities': "AllPub",  # Use utility_code
-           'BldgType': "1Fam",  # Use buildingType_code
-           'KitchenQual': "TA",  # Use kitchenQual_code from selectbox
-           'SaleCondition': "Normal",  # Use saleCondition_code from selectbox
-           'LandSlope': "Gtl",  # Use landSlope_code
+           # 'MSZoning': "RL",  # Use msZoning_code
+           # 'Utilities': "AllPub",  # Use utility_code
+           # 'BldgType': "1Fam",  # Use buildingType_code
+           # 'KitchenQual': "TA",  # Use kitchenQual_code from selectbox
+           # 'SaleCondition': "Normal",  # Use saleCondition_code from selectbox
+           # 'LandSlope': "Gtl",  # Use landSlope_code
 
     }
 
@@ -582,7 +583,7 @@ st.write(input_df)
 
 # important_num_cols.remove("GarageArea")
 # Handle categorical variables before numeric scaling
-X = pd.get_dummies(input_df, columns=cat_cols)
+# X = pd.get_dummies(input_df, columns=cat_cols)
 
 st.write(X)
 
