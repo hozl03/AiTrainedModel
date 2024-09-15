@@ -285,80 +285,80 @@ plt.legend()
 # Show the plot
 plt.show()
 
-#################################################################################################
-# Random Forest Regressor
-max_r2 = 0
-for n_trees in range(64, 129):
-    random_forest = RandomForestRegressor(n_estimators=n_trees, n_jobs=-1)
-    random_forest.fit(X_train, y_train)
+# #################################################################################################
+# # Random Forest Regressor
+# max_r2 = 0
+# for n_trees in range(64, 129):
+#     random_forest = RandomForestRegressor(n_estimators=n_trees, n_jobs=-1)
+#     random_forest.fit(X_train, y_train)
 
-    rfr_predictions = random_forest.predict(X_test)
-    mae_rfr, mse_rfr, rmse_rfr, r2_rfr = evaluation(y_test, rfr_predictions)
-    rmse_cross_val_rfr = rmse_cv(random_forest)
+#     rfr_predictions = random_forest.predict(X_test)
+#     mae_rfr, mse_rfr, rmse_rfr, r2_rfr = evaluation(y_test, rfr_predictions)
+#     rmse_cross_val_rfr = rmse_cv(random_forest)
 
-    print('For a Random Forest with', n_trees, 'trees in total:')
-    print('MAE: %0.5f'%mae_rfr)
-    print('MSE: %0.5f'%mse_rfr)
-    print('RMSE: %0.5f'%rmse_rfr)
-    print('R2 Score: %0.5f' %r2_rfr)
-    print("RMSE Cross-Validation: %0.5f"%rmse_cross_val_rfr)
-    print('--------------------------------------')
+#     print('For a Random Forest with', n_trees, 'trees in total:')
+#     print('MAE: %0.5f'%mae_rfr)
+#     print('MSE: %0.5f'%mse_rfr)
+#     print('RMSE: %0.5f'%rmse_rfr)
+#     print('R2 Score: %0.5f' %r2_rfr)
+#     print("RMSE Cross-Validation: %0.5f"%rmse_cross_val_rfr)
+#     print('--------------------------------------')
 
-    if r2_rfr > max_r2:
-        max_r2 = r2_rfr
-        best_mae_rfr = mae_rfr
-        best_mse_rfr = mse_rfr
-        best_rmse_rfr = rmse_rfr
-        best_rmse_cv_rfr = rmse_cross_val_rfr
-        best_n_trees = n_trees
+#     if r2_rfr > max_r2:
+#         max_r2 = r2_rfr
+#         best_mae_rfr = mae_rfr
+#         best_mse_rfr = mse_rfr
+#         best_rmse_rfr = rmse_rfr
+#         best_rmse_cv_rfr = rmse_cross_val_rfr
+#         best_n_trees = n_trees
 
-print(f'Highest R2 Score for Random Forest: {max_r2} at {best_n_trees} trees')
-print("MAE:", best_mae_rfr)
-print("MSE:", best_mse_rfr)
-print("RMSE:", best_rmse_rfr)
-print("R2 Score:", max_r2)
-print("RMSE Cross-Validation:", best_rmse_cv_rfr)
-print("-" * 30)
+# print(f'Highest R2 Score for Random Forest: {max_r2} at {best_n_trees} trees')
+# print("MAE:", best_mae_rfr)
+# print("MSE:", best_mse_rfr)
+# print("RMSE:", best_rmse_rfr)
+# print("R2 Score:", max_r2)
+# print("RMSE Cross-Validation:", best_rmse_cv_rfr)
+# print("-" * 30)
 
-st.write("MAE:", best_mae_rfr)
-st.write("MSE:", best_mse_rfr)
-st.write("RMSE:", best_rmse_rfr)
-st.write("R2 Score:", max_r2)
-st.write("-" * 30)
+# st.write("MAE:", best_mae_rfr)
+# st.write("MSE:", best_mse_rfr)
+# st.write("RMSE:", best_rmse_rfr)
+# st.write("R2 Score:", max_r2)
+# st.write("-" * 30)
 
-# Add RandomForestRegressor to the models DataFrame
-new_row_rfr = pd.DataFrame({
-    "Model": ["RandomForestRegressor"],
-    "MAE": [best_mae_rfr],
-    "MSE": [best_mse_rfr],
-    "RMSE": [best_rmse_rfr],
-    "R2 Score": [max_r2],
-    "RMSE (Cross-Validation)": [best_rmse_cv_rfr]
-})
-models = pd.concat([models, new_row_rfr], ignore_index=True)
+# # Add RandomForestRegressor to the models DataFrame
+# new_row_rfr = pd.DataFrame({
+#     "Model": ["RandomForestRegressor"],
+#     "MAE": [best_mae_rfr],
+#     "MSE": [best_mse_rfr],
+#     "RMSE": [best_rmse_rfr],
+#     "R2 Score": [max_r2],
+#     "RMSE (Cross-Validation)": [best_rmse_cv_rfr]
+# })
+# models = pd.concat([models, new_row_rfr], ignore_index=True)
 
-# Display the updated models DataFrame
-st.write(models)
+# # Display the updated models DataFrame
+# st.write(models)
 
-# Assuming y_test contains the actual values and predictions contains the predicted values
-plt.figure(figsize=(10, 6))
+# # Assuming y_test contains the actual values and predictions contains the predicted values
+# plt.figure(figsize=(10, 6))
 
-# Scatter plot for Actual Values
-plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=0.6)
+# # Scatter plot for Actual Values
+# plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=0.6)
 
-# Scatter plot for Predicted Values
-plt.scatter(range(len(rfr_predictions)), rfr_predictions, label='Predicted', color='r', alpha=0.6)
+# # Scatter plot for Predicted Values
+# plt.scatter(range(len(rfr_predictions)), rfr_predictions, label='Predicted', color='r', alpha=0.6)
 
-# Adding Labels and Title
-plt.title('Actual vs Predicted House Prices')
-plt.xlabel('Sample Index')
-plt.ylabel('SalePrice')
-plt.legend()
+# # Adding Labels and Title
+# plt.title('Actual vs Predicted House Prices')
+# plt.xlabel('Sample Index')
+# plt.ylabel('SalePrice')
+# plt.legend()
 
-# Show the plot
-plt.show()
+# # Show the plot
+# plt.show()
 
-models.sort_values(by="RMSE (Cross-Validation)")
+# models.sort_values(by="RMSE (Cross-Validation)")
 st.write(models)
 
 
@@ -366,4 +366,10 @@ st.write(models)
 joblib.dump(random_forest, 'random_forest_model.joblib')
 joblib.dump(best_svr, 'svr_model.joblib')
 joblib.dump(lin_reg, 'linear_regression_model.joblib')
+
+
+
+
+
+
 
