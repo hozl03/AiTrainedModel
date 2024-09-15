@@ -609,7 +609,7 @@ X[important_num_cols] = scaler.fit_transform(X[important_num_cols])
 st.write("## Prediction Results")
 if st.button('Predict'):
 #     # # Linear Regression prediction
-    lin_reg_pred = lin_reg.predict(X_train)
+    lin_reg_pred = lin_reg.predict(X)
     st.write(f"**Linear Regression Prediction: ${lin_reg_pred[0]:,.2f}**")
 
 
