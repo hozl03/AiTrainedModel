@@ -20,7 +20,6 @@ from sklearn.svm import SVR
 from xgboost import XGBRegressor
 from sklearn.preprocessing import PolynomialFeatures
 
-from IPython.display import display, HTML
 
 import joblib
 
