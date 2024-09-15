@@ -84,132 +84,87 @@ print(df.isna().sum())
 print("-"*30)
 print("TOTAL MISSING VALUES:",df.isna().sum().sum())
 
-# sns.pairplot(df.select_dtypes(include=[np.number]))
 
-# plt.scatter(x="OverallQual", y="SalePrice", data=df)
+X = df.drop("SalePrice", axis=1)
+y = df["SalePrice"]
 
-# plt.scatter(x="YearBuilt", y="SalePrice", data=df)
+#One-Hot encoding
+X = pd.get_dummies(X, columns=cat_cols)
 
-# df.drop(df[(df['YearBuilt'] < 1900) & (df['SalePrice'] > 400000)].index, inplace=True)
+important_num_cols.remove("SalePrice")
+#Standardization of data
+scaler = StandardScaler()
+X[important_num_cols] = scaler.fit_transform(X[important_num_cols])
 
-# plt.scatter(x="YearBuilt", y="SalePrice", data=df)
+X.head()
 
-# plt.scatter(x="YearRemodAdd", y="SalePrice", data=df)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# df.drop(df[(df['YearRemodAdd'] < 1970) & (df['SalePrice'] > 300000)].index, inplace=True)
-
-# plt.scatter(x="TotalBsmtSF", y="SalePrice", data=df)
-
-# df.drop(df[(df['TotalBsmtSF'] > 4000)].index, inplace=True)
-
-# plt.scatter(x="1stFlrSF", y="SalePrice", data=df)
-
-# plt.scatter(x="GrLivArea", y="SalePrice", data=df)
-
-# df.drop(df[(df['GrLivArea'] > 4400)].index, inplace=True)
-
-# plt.scatter(x="FullBath", y="SalePrice", data=df)
-
-# plt.scatter(x="TotRmsAbvGrd", y="SalePrice", data=df)
-
-# df.drop(df[(df['TotRmsAbvGrd'] == 14)].index, inplace=True)
-
-# plt.scatter(x="GarageCars", y="SalePrice", data=df)
-
-# plt.figure(figsize=(10,8))
-# sns.jointplot(x=df["OverallQual"], y=df["SalePrice"], kind="kde")
-# sns.jointplot(x=df["YearBuilt"], y=df["SalePrice"], kind="kde")
-# sns.jointplot(x=df["YearRemodAdd"], y=df["SalePrice"], kind="kde")
-# sns.jointplot(x=df["TotalBsmtSF"], y=df["SalePrice"], kind="kde")
-# sns.jointplot(x=df["1stFlrSF"], y=df["SalePrice"], kind="kde")
-# sns.jointplot(x=df["FullBath"], y=df["SalePrice"], kind="kde")
-# sns.jointplot(x=df["GrLivArea"], y=df["SalePrice"], kind="kde")
-# sns.jointplot(x=df["TotRmsAbvGrd"], y=df["SalePrice"], kind="kde")
-# sns.jointplot(x=df["GarageCars"], y=df["SalePrice"], kind="kde")
-# plt.show()
-
-# X = df.drop("SalePrice", axis=1)
-# y = df["SalePrice"]
-
-# #One-Hot encoding
-# X = pd.get_dummies(X, columns=cat_cols)
-
-# important_num_cols.remove("SalePrice")
-# #Standardization of data
-# scaler = StandardScaler()
-# X[important_num_cols] = scaler.fit_transform(X[important_num_cols])
-
-# X.head()
-
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# def rmse_cv(model):
-#     rmse = np.sqrt(-cross_val_score(model, X, y, scoring="neg_mean_squared_error", cv=5)).mean()
-#     return rmse
+def rmse_cv(model):
+    rmse = np.sqrt(-cross_val_score(model, X, y, scoring="neg_mean_squared_error", cv=5)).mean()
+    return rmse
 
 
-# def evaluation(y, predictions):
-#     mae = mean_absolute_error(y, predictions)
-#     mse = mean_squared_error(y, predictions)
-#     rmse = np.sqrt(mean_squared_error(y, predictions))
-#     r_squared = r2_score(y, predictions)
-#     return mae, mse, rmse, r_squared
+def evaluation(y, predictions):
+    mae = mean_absolute_error(y, predictions)
+    mse = mean_squared_error(y, predictions)
+    rmse = np.sqrt(mean_squared_error(y, predictions))
+    r_squared = r2_score(y, predictions)
+    return mae, mse, rmse, r_squared
 
-# models = pd.DataFrame(columns=["Model","MAE","MSE","RMSE","R2 Score","RMSE (Cross-Validation)"])
+models = pd.DataFrame(columns=["Model","MAE","MSE","RMSE","R2 Score","RMSE (Cross-Validation)"])
 
-# import pandas as pd
-# from sklearn.linear_model import LinearRegression
 
-# # Fitting the model and making predictions
-# lin_reg = LinearRegression()
-# lin_reg.fit(X_train, y_train)
-# predictions = lin_reg.predict(X_test)
+# Fitting the model and making predictions
+lin_reg = LinearRegression()
+lin_reg.fit(X_train, y_train)
+predictions = lin_reg.predict(X_test)
 
-# # Evaluating the model
-# mae, mse, rmse, r_squared = evaluation(y_test, predictions)
-# print("MAE:", mae)
-# print("MSE:", mse)
-# print("RMSE:", rmse)
-# print("R2 Score:", r_squared)
-# print("-" * 30)
+# Evaluating the model
+mae, mse, rmse, r_squared = evaluation(y_test, predictions)
+print("MAE:", mae)
+print("MSE:", mse)
+print("RMSE:", rmse)
+print("R2 Score:", r_squared)
+print("-" * 30)
 
-# # Performing cross-validation
-# rmse_cross_val = rmse_cv(lin_reg)
-# print("RMSE Cross-Validation:", rmse_cross_val)
+# Performing cross-validation
+rmse_cross_val = rmse_cv(lin_reg)
+print("RMSE Cross-Validation:", rmse_cross_val)
 
-# # Creating a new row as a DataFrame
-# new_row = pd.DataFrame({
-#     "Model": ["LinearRegression"],
-#     "MAE": [mae],
-#     "MSE": [mse],
-#     "RMSE": [rmse],
-#     "R2 Score": [r_squared],
-#     "RMSE (Cross-Validation)": [rmse_cross_val]
-# })
+# Creating a new row as a DataFrame
+new_row = pd.DataFrame({
+    "Model": ["LinearRegression"],
+    "MAE": [mae],
+    "MSE": [mse],
+    "RMSE": [rmse],
+    "R2 Score": [r_squared],
+    "RMSE (Cross-Validation)": [rmse_cross_val]
+})
 
-# # Concatenating the new row with the existing DataFrame
-# models = pd.concat([models, new_row], ignore_index=True)
+# Concatenating the new row with the existing DataFrame
+models = pd.concat([models, new_row], ignore_index=True)
 
-# # Display the updated models DataFrame
-# print(models)
+# Display the updated models DataFrame
+print(models)
 
-# # Assuming y_test contains the actual values and predictions contains the predicted values
-# plt.figure(figsize=(10, 6))
+# Assuming y_test contains the actual values and predictions contains the predicted values
+plt.figure(figsize=(10, 6))
 
-# # Scatter plot for Actual Values
-# plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=0.6)
+# Scatter plot for Actual Values
+plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=0.6)
 
-# # Scatter plot for Predicted Values
-# plt.scatter(range(len(predictions)), predictions, label='Predicted', color='r', alpha=0.6)
+# Scatter plot for Predicted Values
+plt.scatter(range(len(predictions)), predictions, label='Predicted', color='r', alpha=0.6)
 
-# # Adding Labels and Title
-# plt.title('Actual vs Predicted House Prices')
-# plt.xlabel('Sample Index')
-# plt.ylabel('SalePrice')
-# plt.legend()
+# Adding Labels and Title
+plt.title('Actual vs Predicted House Prices')
+plt.xlabel('Sample Index')
+plt.ylabel('SalePrice')
+plt.legend()
 
-# # Show the plot
-# plt.show()
+# Show the plot
+plt.show()
 
 # from sklearn.model_selection import GridSearchCV
 # from scipy import stats
