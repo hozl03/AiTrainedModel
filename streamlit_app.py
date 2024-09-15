@@ -582,7 +582,7 @@ input_df = pd.DataFrame(data, index=[0])
 st.write(input_df)
 input_data = pd.concat([input_df, df], axis=0)
 
-important_num_cols.remove("GarageArea")
+# important_num_cols.remove("GarageArea")
 # Handle categorical variables before numeric scaling
 X = pd.get_dummies(input_data, columns=cat_cols)
 
