@@ -33,7 +33,7 @@ with st.expander('Data'):
     summary = df.describe().T
     st.write(summary)
   
-df.head()
+    st.write(df.head())
     
 df.shape
     
