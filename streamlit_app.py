@@ -97,6 +97,8 @@ scaler = StandardScaler()
 X[important_num_cols] = scaler.fit_transform(X[important_num_cols])
 
 X.head()
+st.write(X.head())
+st.wrtite(y)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
