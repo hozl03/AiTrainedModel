@@ -124,6 +124,13 @@ predictions = lin_reg.predict(X_test)
 
 # Evaluating the model
 mae, mse, rmse, r_squared = evaluation(y_test, predictions)
+st.write("MAE:", mae)
+st.write("MSE:", mse)
+st.write("RMSE:", rmse)
+st.write("R2 Score:", r_squared)
+st.write("-" * 30)
+
+
 print("MAE:", mae)
 print("MSE:", mse)
 print("RMSE:", rmse)
@@ -158,15 +165,6 @@ plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=
 
 # Scatter plot for Predicted Values
 plt.scatter(range(len(predictions)), predictions, label='Predicted', color='r', alpha=0.6)
-
-# Adding Labels and Title
-plt.title('Actual vs Predicted House Prices')
-plt.xlabel('Sample Index')
-plt.ylabel('SalePrice')
-plt.legend()
-
-# Show the plot
-plt.show()
 
 # from sklearn.model_selection import GridSearchCV
 # from scipy import stats
