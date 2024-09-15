@@ -27,6 +27,58 @@ from sklearn.preprocessing import PolynomialFeatures
 
 import joblib
 
+
+# Mapping for MSZoning
+msZoning_mapping = {
+    'Agriculture': 'A',
+    'Commercial': 'C',
+    'Floating Village Residential': 'FV',
+    'Industrial': 'I',
+    'Residential High Density': 'RH',
+    'Residential Low Density': 'RL',
+    'Residential Low Density Park ': 'RP',
+    'Residential Medium Density': 'RM'
+}
+
+utility_mapping = {
+    'All Public Utilities': 'AllPub',
+    'Electricity, Gas, and Water (Septic Tank)': 'NoSewr',
+    'Electricity and Gas Only': 'NoSeWa',
+    'Electricity Only': 'ELO'
+}
+
+landSlope_mapping = {
+    'Gentle slope': 'Gtl',
+    'Moderate Slope': 'Mod',
+    'Severe Slope': 'Sev'
+}
+
+buildingType_mapping = {
+    'Single-family Detached': '1Fam',
+    'Two-family Conversion': '2FmCon',
+    'Duplex': 'Duplx',
+    'Townhouse End Unit': 'TwnhsE',
+    'Townhouse Inside Unit': 'TwnhsI'
+}
+
+kitchenQual_mapping = {
+    'Excellent': 'Ex',
+    'Good': 'Gd',
+    'Average': 'TA',
+    'Fair': 'Fa',
+    'Poor': 'Po'
+}
+
+saleCondition_mapping = {
+    'Normal Sale': 'Normal',
+    'Abnormal Sale': 'Abnorml',
+    'Adjoining Land Purchase': 'AdjLand',
+    'Allocation': 'Alloca',
+    'Family': 'Family',
+    'Partial': 'Partial'
+}
+
+
 with st.expander('Data'):
     st.write('**Raw data**')
     df = pd.read_csv('train.csv')
