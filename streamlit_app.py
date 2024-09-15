@@ -590,7 +590,7 @@ X = pd.get_dummies(input_data, columns=cat_cols)
 
 st.write(X)
 
-important_num_cols.remove("SalePrice")
+# important_num_cols.remove("SalePrice")
 
 # Handle the case where the important numeric columns are scaled after dummy encoding
 # Check if important_num_cols exist in X
