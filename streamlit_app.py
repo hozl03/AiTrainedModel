@@ -118,7 +118,7 @@ st.write(plt.show())
 
 #select more important columns
 important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
-cat_cols = ["MSZoning"]
+cat_cols = ["MSZoning", "Utilities"]
 important_cols = important_num_cols + cat_cols
 # important_cols = important_num_cols
 
@@ -428,7 +428,7 @@ plt.scatter(range(len(predictions)), predictions, label='Predicted', color='r', 
 # plt.show()
 
 # models.sort_values(by="RMSE (Cross-Validation)")
-st.write(models)
+# st.write(models)
 
 
 
@@ -499,10 +499,10 @@ with st.sidebar:
     st.write("Zoning code selected is: ", msZoning_code)
 
     
-    # # Utility input with mapping
-    # utility = st.selectbox('Utility', list(utility_mapping.keys()))
-    # utility_code = utility_mapping[utility]
-    # st.write("Utility code selected is: ", utility_code)
+    # Utility input with mapping
+    utility = st.selectbox('Utility', list(utility_mapping.keys()))
+    utility_code = utility_mapping[utility]
+    st.write("Utility code selected is: ", utility_code)
 
     # # Land Slope input with mapping
     # landSlope = st.selectbox('Land Slope', list(landSlope_mapping.keys()))
@@ -565,7 +565,7 @@ with st.sidebar:
            'FullBath': fullBath,  # Use fullBath from slider
            'GarageCars': garageCars,  # Use garageCars from slider
            'MSZoning': msZoning_code,  # Use msZoning_code
-           # 'Utilities': utility_code,  # Use utility_code
+           'Utilities': utility_code,  # Use utility_code
            # 'BldgType': buildingType_code,  # Use buildingType_code
            # 'KitchenQual': kitchenQual_code,  # Use kitchenQual_code from selectbox
            # 'SaleCondition': saleCondition_code,  # Use saleCondition_code from selectbox
