@@ -23,15 +23,22 @@ from sklearn.preprocessing import PolynomialFeatures
 
 import joblib
 
-df = pd.read_csv('train.csv')
-
-st.write(df.head())
-
-st.write(df.shape)
-
-st.write(df.info())
-
-st.write(df.describe().T)
+with st.expander('Data'):
+    st.write('**Raw data**')
+    df = pd.read_csv('train.csv')
+    st.write(df)
+           
+    st.write('**Statistical Summary of Dataset**')
+    summary = df.describe().T
+    st.write(summary)
+  
+    st.write(df.head())
+    
+    st.write(df.shape)
+    
+    st.write(df.info())
+    
+    st.write(df.describe().T)
 
 # # Function to create scrollable table within a small window
 # def create_scrollable_table(df, table_id, title):
