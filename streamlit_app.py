@@ -118,7 +118,7 @@ st.write(plt.show())
 
 #select more important columns
 important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
-cat_cols = ["MSZoning", "Utilities"]
+cat_cols = ["MSZoning", "Utilities", "BldgType", "KitchenQual", "SaleCondition", "LandSlope"]
 important_cols = important_num_cols + cat_cols
 # important_cols = important_num_cols
 
@@ -504,15 +504,15 @@ with st.sidebar:
     utility_code = utility_mapping[utility]
     st.write("Utility code selected is: ", utility_code)
 
-    # # Land Slope input with mapping
-    # landSlope = st.selectbox('Land Slope', list(landSlope_mapping.keys()))
-    # landSlope_code = landSlope_mapping[landSlope]
-    # st.write("Land Slope code selected is: ", landSlope_code)
+    # Land Slope input with mapping
+    landSlope = st.selectbox('Land Slope', list(landSlope_mapping.keys()))
+    landSlope_code = landSlope_mapping[landSlope]
+    st.write("Land Slope code selected is: ", landSlope_code)
 
-    # # Building Type input with mapping
-    # buildingType = st.selectbox('Building Type', list(buildingType_mapping.keys()))
-    # buildingType_code = buildingType_mapping[buildingType]
-    # st.write("Building Type code selected is: ", buildingType_code)
+    # Building Type input with mapping
+    buildingType = st.selectbox('Building Type', list(buildingType_mapping.keys()))
+    buildingType_code = buildingType_mapping[buildingType]
+    st.write("Building Type code selected is: ", buildingType_code)
            
     overallQuality = st.slider("Rates the overall material and finish of the house", 1, 10, 5)
     st.write("The overall material and finish of the house is : ", rating[overallQuality - 1])
@@ -540,18 +540,18 @@ with st.sidebar:
     fullBath = st.slider("Full bathrooms above grade", 0, 10, 5)
     st.write("Full bathrooms above grade is : ", fullBath)
 
-    # Map kitchen quality input to corresponding code
-    # kitchenQual = st.selectbox('Kitchen Quality', list(kitchenQual_mapping.keys()))
-    # kitchenQual_code = kitchenQual_mapping[kitchenQual]  # Map to the corresponding code (e.g., "Ex", "Gd")
-    # st.write("Kitchen Quality code selected is: ", kitchenQual_code)
+    Map kitchen quality input to corresponding code
+    kitchenQual = st.selectbox('Kitchen Quality', list(kitchenQual_mapping.keys()))
+    kitchenQual_code = kitchenQual_mapping[kitchenQual]  # Map to the corresponding code (e.g., "Ex", "Gd")
+    st.write("Kitchen Quality code selected is: ", kitchenQual_code)
 
     garageCars = st.slider("Size of garage in car capacity", 0, 10, 3)
     st.write("Size of garage in car capacity is : ", grLiveArea)
 
-    # Sale Condition input with mapping
-    # saleCondition = st.selectbox('Condition of Sale', list(saleCondition_mapping.keys()))
-    # saleCondition_code = saleCondition_mapping[saleCondition]
-    # st.write("Sale Condition code selected is: ", saleCondition_code)
+    Sale Condition input with mapping
+    saleCondition = st.selectbox('Condition of Sale', list(saleCondition_mapping.keys()))
+    saleCondition_code = saleCondition_mapping[saleCondition]
+    st.write("Sale Condition code selected is: ", saleCondition_code)
 
     # Corrected data dictionary with valid variable names
     data = {
@@ -566,10 +566,10 @@ with st.sidebar:
            'GarageCars': garageCars,  # Use garageCars from slider
            'MSZoning': msZoning_code,  # Use msZoning_code
            'Utilities': utility_code,  # Use utility_code
-           # 'BldgType': buildingType_code,  # Use buildingType_code
-           # 'KitchenQual': kitchenQual_code,  # Use kitchenQual_code from selectbox
-           # 'SaleCondition': saleCondition_code,  # Use saleCondition_code from selectbox
-           # 'LandSlope': landSlope_code,  # Use landSlope_code
+           'BldgType': buildingType_code,  # Use buildingType_code
+           'KitchenQual': kitchenQual_code,  # Use kitchenQual_code from selectbox
+           'SaleCondition': saleCondition_code,  # Use saleCondition_code from selectbox
+           'LandSlope': landSlope_code,  # Use landSlope_code
     }
 
 
