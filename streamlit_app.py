@@ -198,12 +198,21 @@ y = df["SalePrice"]
 X = pd.get_dummies(X, columns=cat_cols)
 
 important_num_cols.remove("SalePrice")
-# important_num_cols.remove("YearBuilt")
+important_num_cols.remove("YearBuilt")
 important_num_cols.remove("YearRemodAdd")
 important_num_cols.remove("TotalBsmtSF")
 important_num_cols.remove("1stFlrSF")
 important_num_cols.remove("GrLivArea")
-# important_num_cols.remove("FullBath")
+important_num_cols.remove("FullBath")
+important_num_cols.remove("TotRmsAbvGrd")
+important_num_cols.remove("GarageCars")
+important_num_cols.remove("MSZoning")
+important_num_cols.remove("Utilities")
+important_num_cols.remove("BldgType")
+important_num_cols.remove("KitchenQual")
+important_num_cols.remove("SaleCondition")
+important_num_cols.remove("LandSlope")
+
 
 #Standardization of data
 scaler = StandardScaler()
@@ -600,9 +609,9 @@ X[important_num_cols] = scaler.fit_transform(X[important_num_cols])
 # Prediction using different models
 st.write("## Prediction Results")
 # if st.button('Predict'):
-#     # # Linear Regression prediction
-lin_reg_pred = lin_reg.predict(X_train)
-st.write(f"**Linear Regression Prediction: ${lin_reg_pred[0]:,.2f}**")
+# #     # # Linear Regression prediction
+# lin_reg_pred = lin_reg.predict(X_train)
+# st.write(f"**Linear Regression Prediction: ${lin_reg_pred[0]:,.2f}**")
 
 
 
