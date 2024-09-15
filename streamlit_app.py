@@ -135,7 +135,6 @@ print("MAE:", mae)
 print("MSE:", mse)
 print("RMSE:", rmse)
 print("R2 Score:", r_squared)
-print("-" * 30)
 
 # Performing cross-validation
 rmse_cross_val = rmse_cv(lin_reg)
@@ -155,7 +154,7 @@ new_row = pd.DataFrame({
 models = pd.concat([models, new_row], ignore_index=True)
 
 # Display the updated models DataFrame
-print(models)
+st.write(models)
 
 # Assuming y_test contains the actual values and predictions contains the predicted values
 plt.figure(figsize=(10, 6))
