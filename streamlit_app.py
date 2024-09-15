@@ -118,9 +118,10 @@ st.write(plt.show())
 
 #select more important columns
 important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
+cat_cols = ["MSZoning"]
 # cat_cols = ["MSZoning", "Utilities", "BldgType", "KitchenQual", "SaleCondition", "LandSlope"]
-important_cols = important_num_cols
-# important_cols = important_num_cols + cat_cols
+# important_cols = important_num_cols
+important_cols = important_num_cols + cat_cols
 
 
 df = df[important_cols]
@@ -192,8 +193,8 @@ plt.show()
 X = df.drop("SalePrice", axis=1)
 y = df["SalePrice"]
 
-# #One-Hot encoding
-# X = pd.get_dummies(X, columns=cat_cols)
+#One-Hot encoding
+X = pd.get_dummies(X, columns=cat_cols)
 
 important_num_cols.remove("SalePrice")
 
@@ -480,9 +481,9 @@ with st.sidebar:
 
     st.header('Input features')
            
-    # msZoning = st.selectbox('Zoning', list(msZoning_mapping.keys()))
-    # msZoning_code = msZoning_mapping[msZoning]  # Map to the corresponding code (e.g., "A", "C")
-    # st.write("Zoning code selected is: ", msZoning_code)
+    msZoning = st.selectbox('Zoning', list(msZoning_mapping.keys()))
+    msZoning_code = msZoning_mapping[msZoning]  # Map to the corresponding code (e.g., "A", "C")
+    st.write("Zoning code selected is: ", msZoning_code)
 
     
     # # Utility input with mapping
@@ -504,10 +505,10 @@ with st.sidebar:
     st.write("The overall material and finish of the house is : ", rating[overallQuality - 1])
 
     # Correctly indented date input
-    yearBuilt = st.date_input("Original construction date", datetime.date(2019, 7, 6))
+    yearBuilt = st.date_input("Original construction date", datetime.date(1990, 7, 6))
     st.write("The original construction date is: ", yearBuilt)
            
-    yearRemodAdd = st.date_input("Remodel date", datetime.date(2019, 7, 6))
+    yearRemodAdd = st.date_input("Remodel date", datetime.date(1990, 7, 6))
     st.write("The remodel date date is: ", yearBuilt)
 
     totalBasmtSF = st.slider("Total square feet of basement area", 0.0, 10000.0, 500.0)
@@ -565,7 +566,7 @@ with st.sidebar:
            'GrLivArea': 912,  # Use grLiveArea from slider
            'FullBath': 1,  # Use fullBath from slider
            'GarageCars': 1,  # Use garageCars from slider
-           # 'MSZoning': "RL",  # Use msZoning_code
+           'MSZoning': "RL",  # Use msZoning_code
            # 'Utilities': "AllPub",  # Use utility_code
            # 'BldgType': "1Fam",  # Use buildingType_code
            # 'KitchenQual': "TA",  # Use kitchenQual_code from selectbox
@@ -583,7 +584,7 @@ st.write(input_df)
 
 # important_num_cols.remove("GarageArea")
 # Handle categorical variables before numeric scaling
-# X = pd.get_dummies(input_df, columns=cat_cols)
+X = pd.get_dummies(input_df, columns=cat_cols)
 
 st.write(X)
 
