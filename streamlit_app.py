@@ -171,7 +171,7 @@ plt.scatter(x="TotRmsAbvGrd", y="SalePrice", data=df)
 
 df.drop(df[(df['TotRmsAbvGrd'] == 14)].index, inplace=True)
 
-plt.scatter(x="GarageCars", y="SalePrice", data=df)
+# plt.scatter(x="GarageCars", y="SalePrice", data=df)
 
 plt.figure(figsize=(10,8))
 sns.jointplot(x=df["OverallQual"], y=df["SalePrice"], kind="kde")
