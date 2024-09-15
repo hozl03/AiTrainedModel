@@ -165,9 +165,6 @@ plt.scatter(range(len(y_test)), y_test.values, label='Actual', color='b', alpha=
 # Scatter plot for Predicted Values
 plt.scatter(range(len(predictions)), predictions, label='Predicted', color='r', alpha=0.6)
 
-from sklearn.model_selection import GridSearchCV
-from scipy import stats
-from sklearn import metrics
 
 # SVR with Grid Search
 param_grid = {
@@ -194,6 +191,7 @@ st.write("MAE:", mae_svr)
 st.write("MSE:", mse_svr)
 st.write("RMSE:", rmse_svr)
 st.write("R2 Score:", r2_svr)
+st.write("-" * 30)
 
 print("SVR (GridSearch) - Best Parameters:", best_params)
 print("MAE:", mae_svr)
