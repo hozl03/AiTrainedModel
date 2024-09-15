@@ -540,7 +540,7 @@ with st.sidebar:
     fullBath = st.slider("Full bathrooms above grade", 0, 10, 5)
     st.write("Full bathrooms above grade is : ", fullBath)
 
-    Map kitchen quality input to corresponding code
+    # Map kitchen quality input to corresponding code
     kitchenQual = st.selectbox('Kitchen Quality', list(kitchenQual_mapping.keys()))
     kitchenQual_code = kitchenQual_mapping[kitchenQual]  # Map to the corresponding code (e.g., "Ex", "Gd")
     st.write("Kitchen Quality code selected is: ", kitchenQual_code)
@@ -548,7 +548,7 @@ with st.sidebar:
     garageCars = st.slider("Size of garage in car capacity", 0, 10, 3)
     st.write("Size of garage in car capacity is : ", grLiveArea)
 
-    Sale Condition input with mapping
+    # Sale Condition input with mapping
     saleCondition = st.selectbox('Condition of Sale', list(saleCondition_mapping.keys()))
     saleCondition_code = saleCondition_mapping[saleCondition]
     st.write("Sale Condition code selected is: ", saleCondition_code)
