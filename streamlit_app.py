@@ -363,7 +363,7 @@ st.write(models)
 
 
 
-joblib.dump(random_forest, 'random_forest_model.joblib')
+# joblib.dump(random_forest, 'random_forest_model.joblib')
 joblib.dump(best_svr, 'svr_model.joblib')
 joblib.dump(lin_reg, 'linear_regression_model.joblib')
 
