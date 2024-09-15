@@ -27,6 +27,8 @@ from sklearn.preprocessing import PolynomialFeatures
 
 import joblib
 
+rating = ["Very Poor","Poor","Fair","Below Average","Average","Above Average",
+           "Good","Very Good","Excellent","Very Excellent"]
 
 # Mapping for MSZoning
 msZoning_mapping = {
