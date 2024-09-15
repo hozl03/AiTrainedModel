@@ -122,8 +122,10 @@ st.write(plt.show())
 
 #select more important columns
 important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
-cat_cols = ["MSZoning", "Utilities","BldgType","KitchenQual","SaleCondition","LandSlope"]
-important_cols = important_num_cols + cat_cols
+# cat_cols = ["MSZoning", "Utilities","BldgType","KitchenQual","SaleCondition","LandSlope"]
+# important_cols = important_num_cols + cat_cols
+important_cols = important_num_cols
+
 
 df = df[important_cols]
 st.write(df.info())
@@ -198,14 +200,14 @@ y = df["SalePrice"]
 X = pd.get_dummies(X, columns=cat_cols)
 
 important_num_cols.remove("SalePrice")
-important_num_cols.remove("YearBuilt")
-important_num_cols.remove("YearRemodAdd")
-important_num_cols.remove("TotalBsmtSF")
-important_num_cols.remove("1stFlrSF")
-important_num_cols.remove("GrLivArea")
-important_num_cols.remove("FullBath")
-important_num_cols.remove("TotRmsAbvGrd")
-important_num_cols.remove("GarageCars")
+# important_num_cols.remove("YearBuilt")
+# important_num_cols.remove("YearRemodAdd")
+# important_num_cols.remove("TotalBsmtSF")
+# important_num_cols.remove("1stFlrSF")
+# important_num_cols.remove("GrLivArea")
+# important_num_cols.remove("FullBath")
+# important_num_cols.remove("TotRmsAbvGrd")
+# important_num_cols.remove("GarageCars")
 # important_cols.remove("MSZoning")
 # important_cols.remove("Utilities")
 # important_cols.remove("BldgType")
