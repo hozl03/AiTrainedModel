@@ -198,11 +198,11 @@ y = df["SalePrice"]
 X = pd.get_dummies(X, columns=cat_cols)
 
 important_num_cols.remove("SalePrice")
-# important_num_cols.remove("YearBuilt")
-# important_num_cols.remove("YearRemodAdd")
-# important_num_cols.remove("TotalBsmtSF")
-# important_num_cols.remove("1stFlrSF")
-# important_num_cols.remove("GrLivArea")
+important_num_cols.remove("YearBuilt")
+important_num_cols.remove("YearRemodAdd")
+important_num_cols.remove("TotalBsmtSF")
+important_num_cols.remove("1stFlrSF")
+important_num_cols.remove("GrLivArea")
 important_num_cols.remove("FullBath")
 
 #Standardization of data
