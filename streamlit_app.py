@@ -33,21 +33,16 @@ rating = ["Very Poor","Poor","Fair","Below Average","Average","Above Average",
 
 # Mapping for MSZoning
 msZoning_mapping = {
-    'Agriculture': 'A',
-    'Commercial': 'C',
+    'Commercial': 'C (all)',
     'Floating Village Residential': 'FV',
-    'Industrial': 'I',
     'Residential High Density': 'RH',
     'Residential Low Density': 'RL',
-    'Residential Low Density Park ': 'RP',
     'Residential Medium Density': 'RM'
 }
 
 utility_mapping = {
     'All Public Utilities': 'AllPub',
     'Electricity, Gas, and Water (Septic Tank)': 'NoSewr',
-    'Electricity and Gas Only': 'NoSeWa',
-    'Electricity Only': 'ELO'
 }
 
 landSlope_mapping = {
@@ -69,7 +64,6 @@ kitchenQual_mapping = {
     'Good': 'Gd',
     'Average': 'TA',
     'Fair': 'Fa',
-    'Poor': 'Po'
 }
 
 saleCondition_mapping = {
@@ -80,6 +74,8 @@ saleCondition_mapping = {
     'Family': 'Family',
     'Partial': 'Partial'
 }
+
+
 
 
 with st.expander('Data'):
@@ -122,9 +118,9 @@ st.write(plt.show())
 
 #select more important columns
 important_num_cols = list(numeric_df.corr()["SalePrice"][(numeric_df.corr()["SalePrice"]>0.50) | (numeric_df.corr()["SalePrice"]<-0.50)].index)
-# cat_cols = ["MSZoning", "Utilities","BldgType","KitchenQual","SaleCondition","LandSlope"]
-# important_cols = important_num_cols + cat_cols
-important_cols = important_num_cols
+cat_cols = ["MSZoning"]
+important_cols = important_num_cols + cat_cols
+# important_cols = important_num_cols
 
 
 df = df[important_cols]
@@ -197,7 +193,7 @@ X = df.drop("SalePrice", axis=1)
 y = df["SalePrice"]
 
 # #One-Hot encoding
-# X = pd.get_dummies(X, columns=cat_cols)
+X = pd.get_dummies(X, columns=cat_cols)
 
 important_num_cols.remove("SalePrice")
 # important_num_cols.remove("YearBuilt")
@@ -498,9 +494,9 @@ with st.sidebar:
 
     st.header('Input features')
            
-    # msZoning = st.selectbox('Zoning', list(msZoning_mapping.keys()))
-    # msZoning_code = msZoning_mapping[msZoning]  # Map to the corresponding code (e.g., "A", "C")
-    # st.write("Zoning code selected is: ", msZoning_code)
+    msZoning = st.selectbox('Zoning', list(msZoning_mapping.keys()))
+    msZoning_code = msZoning_mapping[msZoning]  # Map to the corresponding code (e.g., "A", "C")
+    st.write("Zoning code selected is: ", msZoning_code)
 
     
     # # Utility input with mapping
@@ -568,7 +564,7 @@ with st.sidebar:
            'GrLivArea': grLiveArea,  # Use grLiveArea from slider
            'FullBath': fullBath,  # Use fullBath from slider
            'GarageCars': garageCars,  # Use garageCars from slider
-           # 'MSZoning': msZoning_code,  # Use msZoning_code
+           'MSZoning': msZoning_code,  # Use msZoning_code
            # 'Utilities': utility_code,  # Use utility_code
            # 'BldgType': buildingType_code,  # Use buildingType_code
            # 'KitchenQual': kitchenQual_code,  # Use kitchenQual_code from selectbox
@@ -585,7 +581,7 @@ st.write(input_df)
 
 # important_num_cols.remove("GarageArea")
 # Handle categorical variables before numeric scaling
-# X = pd.get_dummies(input_df, columns=cat_cols)
+X = pd.get_dummies(input_df, columns=cat_cols)
 
 st.write(X)
 
